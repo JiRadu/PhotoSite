@@ -1,0 +1,9 @@
+TODO: https://www.sitepoint.com/php-gallery-system-minutes/
+TODO: Fiecare utilizator poate incarca poze in aplicatie. Pozele vor fi vizibile de ceilalti utilizatori.
+TODO: Ceilalti utilizatori pot pune comentarii pe pozele din aplicatie.
+TODO: Ca la Facebook, implementati un buton de Like pentru fiecare poza, care va permite utilizatorilor sa aprecieze poza respectiva.
+TODO: Cand utilizatorul apasa butonul Like, se creste numarul de like-uri asociat pozei si se marcheaza cumva in mod vizual. Daca mai apasa inca o data pe buton, utilizatorul da “unlike” la poza.
+TODO: Numarul de like-uri pe o poza nu poate fi mai mare decat numarul de utilizatori din aplicatie.
+TODO: Langa butonul de Like apare numarul total de like-uri ale pozei.
+TODO: Pozele unui utilizator sunt afisate sortate descrescator in functie de numarul de like-uri. Daca 2 poze au acelasi numar de like-uri, se sorteaza in ordine cronologica descrestoare (cele mai recente primele).
+TODO: Un utilizator poate sterge poze din contul lui. Atunci cand sterge o poza, se sterg automat si comentariile associate, precum si like-urile.
