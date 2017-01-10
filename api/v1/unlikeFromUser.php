@@ -11,8 +11,8 @@ $result = $db->deleteOneLike($query);
 if($result == true) {
   $result2 = $db->editValuesInTable($table2_name,$r->pid,"likes","-",1,"pid");
   if($result2 == 0){
-    $response["status"] = "success";
-    $response["message"] = "Liked";
+    $response["status"] = "info";
+    $response["message"] = "Unliked";
     echo json_encode($response);
   } else {
     $response["status"] = "error";
