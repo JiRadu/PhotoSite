@@ -5,12 +5,12 @@
         </div>
         <div class="col-md-2 col-xs-3">
             <a ng-click="logout();" class="navbar-brand" style="font-size:12px">
-                Logout
+              Logout
             </a>
         </div>
         <div class="col-md-2 col-xs-3">
             <a ng-click="addAPhoto();" class="navbar-brand" style="font-size:12px">
-                Adauga o poza
+              Adauga o poza
             </a>
         </div>
     </div>
@@ -30,16 +30,17 @@
         </ul>
     </div>
 </div>
-<div class="row">
-    <div class="col-lg-6 col-md-6 col-sm-12">
-        <h4 class="header blue lighter bigger">
-            Profil
-        </h4>
-        Nume: {{name}}
-        <br> Email: {{email}}
-        <br> Telefon: {{phone}}
-        <br> Adresa: {{address}}
-        <div>
-        </div>
-    </div>
-</div>
+<br>
+<form name="addPhotoForm" ng-submit="submit(addPhotoForm)">
+    Adauga o poza:
+    <label class="btn btn-primary btn-file">
+            Browse...
+            <input type="file" style="display: none;" file-model="newPhoto">
+    </label>
+    <br>
+    <br>
+    Adauga o descriere:
+    <textarea class="form-control" rows="5" id="comment" placeholder="Descriere" ng-model="descr"></textarea>
+    <br>
+    <button type="ng-submit" class="btn btn-default" ng-disabled="loading">Publica</button>
+</form>

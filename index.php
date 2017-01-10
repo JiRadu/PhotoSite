@@ -27,12 +27,15 @@
   <script src="js/angular-route.min.js"></script>
   <script src="js/angular-animate.min.js" ></script>
   <script src="js/toaster.js"></script>
-  <script src="app/app.js"></script>
-  <script src="app/data.js"></script>
-  <script src="app/directives.js"></script>
-  <script src="app/auth.js"></script>
-  <script src="app/profile.js"></script>
-  <script src="app/people.js"></script>
-  <script src="app/person.js"></script>
+  <script src="app/app.configuration.js"></script>
+  <script src="app/services/data.js"></script>
+  <script src="app/services/directives.js"></script>
+  <script src="app/services/photoUpload.js"></script>
+  <script src="app/controllers/auth.js"></script>
+  <script src="app/controllers/profile.js"></script>
+  <script src="app/controllers/people.js"></script>
+  <script src="app/controllers/person.js"></script>
+  <script src="app/controllers/addPhoto.js"></script>
+  <script src="app/controllers/photos.js"></script>
 </html>
 

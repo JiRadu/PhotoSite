@@ -17,16 +17,17 @@ CREATE TABLE IF NOT EXISTS `customers_auth` (
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`uid`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=187 ;
-CREATE TABLE IF NOT EXISTS `pictures` (
+
+
+CREATE TABLE IF NOT EXISTS `photo` (
   `pid` INT NOT NULL AUTO_INCREMENT,
   `uid` INT(11) NOT NULL,
-  `path` VARCHAR(255) NOT NULL,
+  `descr` VARCHAR(255),
+  `photoName` VARCHAR(255) NOT NULL,
   `likes` INT NOT NULL,
-  `cid` INT NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`pid`),
-  FOREIGN KEY(`uid`) REFERENCES customers_auth(`uid`),
-  FOREIGN KEY(`cid`) REFERENCES comments(`cid`)
+  FOREIGN KEY(`uid`) REFERENCES customers_auth(`uid`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=187 ;
 -- TODO: make Table for Comments
 --

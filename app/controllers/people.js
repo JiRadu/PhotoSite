@@ -9,6 +9,7 @@ app.controller('pplCtrl', function($scope, $rootScope, $routeParams, $location, 
     .then(function success(response) {
       $scope.people = response;
     }, function error(err) {});
-
-
+  $scope.addAPhoto = function() {
+    $location.path('/addPhoto');
+  };
 });

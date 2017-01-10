@@ -8,7 +8,6 @@ app.controller('authCtrl', function($scope, $rootScope, $routeParams, $location,
     }).then(function(results) {
       Data.toast(results);
       if (results.status == "success") {
-        $rootScope.justLoggedIn = true;
         $location.path('profile');
       }
     });
@@ -20,7 +19,6 @@ app.controller('authCtrl', function($scope, $rootScope, $routeParams, $location,
     }).then(function(results) {
       Data.toast(results);
       if (results.status == "success") {
-        $rootScope.justLoggedIn = true;
         $location.path('profile');
       }
     });

@@ -13,4 +13,7 @@ app.controller('personCtrl', function($scope, $rootScope, $routeParams, $locatio
       $scope.phone = response.phone;
       $scope.address = response.address;
     }, function error(err) {});
+  $scope.addAPhoto = function() {
+    $location.path('/addPhoto');
+  };
 });

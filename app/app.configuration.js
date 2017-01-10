@@ -38,6 +38,14 @@ app.config(['$routeProvider',
           templateUrl: 'partials/profile.html',
           controller: 'personCtrl'
         })
+        .when('/addPhoto', {
+          templateUrl: 'partials/addPhoto.html',
+          controller: 'addPhotoCtrl'
+        })
+        .when('/photos', {
+          templateUrl: 'partials/photos.html',
+          controller: 'photosCtrl'
+        })
         .otherwise({
           redirectTo: '/login'
         });
