@@ -1,14 +1,15 @@
 <?php
     require_once 'dbHandler.php';
     $db = new DbHandler();
-    $target_dir = "../../../uploaded_files/";
-    $target_file = $target_dir . basename($_FILES["file"]["name"]);
+    $target_dir = "../uploaded_photos/";
+    $RandomName = uniqid();
+    $target_file = $target_dir . basename($RandomName);
     if(move_uploaded_file($_FILES["file"]["tmp_name"], $target_file)){
       $r->photo->name = $_POST['name'];
       $r->photo->uid = $_POST['uid'];
       $r->photo->likes = 0;
       $r->photo->descr = $_POST['descr'];
-      $r->photo->photoName = $_FILES["file"]["name"];
+      $r->photo->photoName = $RandomName;
       $table_name = "photo";
       $column_names = array('uid', 'descr', 'photoName', 'likes');
       $result = $db->insertIntoTable($r->photo, $column_names, $table_name);

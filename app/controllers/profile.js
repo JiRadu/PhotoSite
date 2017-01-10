@@ -15,4 +15,8 @@ app.controller('profileCtrl', function($scope, $rootScope, $routeParams, $locati
   $scope.addAPhoto = function() {
     $location.path('/addPhoto');
   };
+  Data.post('getImagesForUser', { uid: $scope.uid })
+    .then(function success(response) {
+      $scope.photos = response;
+    }, function error(err) {});
 });

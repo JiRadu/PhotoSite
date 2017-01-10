@@ -43,3 +43,14 @@
         </div>
     </div>
 </div>
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <h4 class="header blue lighter bigger">
+            Galerie foto
+        </h4>
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-6 col-xs-12" ng-repeat="photo in photos track by $index">
+      <i style='background-image: url(/api/uploaded_photos/{{photo.photoName}});height: 206px;width: 189px;position:relative;display:block;background-size:cover;cursor:pointer;padding:0'></i>
+      <!-- TODO: la hover sa faca ceva -->
+    </div>
+</div>
