@@ -99,10 +99,21 @@ padding-bottom: 10px;*/
     padding-left: 30px;
 }
 
-.photo-wrapper {
-    height: 812px;
+.post-wrapper {
+    height: 100%;
     background-color: #e6e6e6;
     width: 502px;
     border: 1px;
     border-style: ridge;
+    overflow-y: hidden;
+}
+
+.photo-wrapper {
+    width: 476px;
+    height: 50%;
+    background-color: #e6e6e6;
+    overflow-y: hidden;
+    border: 1px;
+    border-style: ridge;
+    vertical-align: middle;
 }

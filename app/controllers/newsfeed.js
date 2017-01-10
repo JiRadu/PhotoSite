@@ -5,12 +5,43 @@ app.controller('newsfeedCtrl', function($scope, $rootScope, $routeParams, $locat
       $location.path('login');
     });
   };
+  $scope.like = function(pid, $index) {
+    if ($scope.recentPhotos[$index].liked === 'false') {
+      Data.post('likeFromUser', { uid: $rootScope.uid, pid: pid }).then(function(result) {
+        if (result) {
+          $scope.recentPhotos[$index].liked = 'true';
+          Data.toast(result);
+          $scope.recentPhotos[$index].likes++;
+        } else {
+          console.log(err);
+        }
+      }, function(err) {
+        console.log(err);
+      });
+    } else {
+      Data.post('unlikeFromUser', { uid: $rootScope.uid, pid: pid }).then(function(result) {
+        if (result) {
+          $scope.recentPhotos[$index].liked = 'false';
+          Data.toast(result);
+          $scope.recentPhotos[$index].likes--;
+        } else {
+          console.log(err);
+        }
+      }, function(err) {
+        console.log(err);
+      });
+    }
+  };
   $scope.addAPhoto = function() {
     $location.path('/addPhoto');
   };
+  // TODO: PUT A LIMIT HERE
   Data.get('recentPhotos').then(function(results) {
-
-      $scope.recentPhotos = results;
+      if (results.status !== 'error') {
+        $scope.recentPhotos = results;
+      } else {
+        $scope.recentPhotos = [];
+      }
       //Convert mysql date into javascript date
       $scope.recentPhotos.forEach(function(photo) {
         var aux = photo.created.split(/[- :]/);
@@ -19,8 +50,10 @@ app.controller('newsfeedCtrl', function($scope, $rootScope, $routeParams, $locat
         aux = photo.timeAgo.split(/[, ]/);
         photo.timeAgo = aux[0] + " " + aux[1];
         Data.post('getInfo', { uid: photo.uid }).then(function(result) {
-          console.log(result);
           photo.PosterName = result.name;
+        });
+        Data.post('isLikedByUser', { uid: $rootScope.uid, pid: photo.pid }).then(function(result) {
+          photo.liked = result;
         });
       });
     },

@@ -25,6 +25,22 @@ class DbHandler {
       }
       return $rows;
     }
+    public function deleteOneLike($query){
+      $r = $this->conn->query($query) or die($this->conn->error.__LINE__);
+      return $r;
+    }
+    public function editValuesInTable($table,$key,$field,$operation,$value, $keyField){
+      if($operation == "+"){
+        $r = $this->conn->query("UPDATE $table SET $field=$field+$value WHERE $keyField=$key") or die($this->conn->error.__LINE__);
+        return r;
+      } else if($operation == "-"){
+          $r = $this->conn->query("UPDATE $table SET $field=$field-$value WHERE $keyField=$key") or die($this->conn->error.__LINE__);
+          return r;
+        } else {
+          $r = $this->conn->query("UPDATE $table SET $field=$value WHERE $keyField=$key") or die($this->conn->error.__LINE__);
+          return r;
+        }
+    }
     /**
      * Creating new record
      */

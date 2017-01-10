@@ -35,20 +35,41 @@
         Cele mai recente poze:
     </h4>
 </div>
-<div class="row" ng-repeat="photo in recentPhotos track by $index | orderBy : created : true">
+<div class="row" ng-repeat="photo in recentPhotos track by $index">
     <div align="center">
-        <div class="photo-wrapper">
-          <div align="left" style="padding-left:10px">
-            <a style="font-size:20px" href="#/person/:{{photo.uid}}">
+        <div class="post-wrapper">
+            <div align="left" style="padding-left:10px">
+                <a style="font-size:20px" href="#/person/:{{photo.uid}}">
                 {{photo.PosterName}}
             </a>
-            <div>
-                {{photo.timeAgo}} ago
+                <div>
+                    {{photo.timeAgo}} ago
+                </div>
+                <div>
+                    <b>Descriere: </b>{{photo.descr}}
+                </div>
             </div>
-          </div>
-            <div align="center" style="width:476px;height:714px;">
-                <img src="/api/uploaded_photos/{{photo.photoName}}" style="width:100%;height:auto;max-height:400px"></img>
+            <div align="center" class="photo-wrapper">
+                <img src="/api/uploaded_photos/{{photo.photoName}}"
+                    ng-show="photo.photoName"
+                    style=" width:100%;height:auto;max-height:960px">
+                </img>
             </div>
+            <hr>
+            <div align="left">
+                <button class="btn btn-default fa"
+                    ng-class="{'btn':true, 'btn-default':true, 'fa':true,
+                    'fa-thumbs-up': photo.liked==='true',
+                    'fa-thumbs-o-up': photo.liked==='false'}"
+                    style="margin-left: 12px"
+                    ng-click="like(photo.pid, $index, photo.likes)">
+                    Like
+                </button>
+                {{photo.likes}}
+            </div>
+            <hr>
+            <input class="form-control" type="text" placeholder="Write a comment">
+            <br>
         </div>
     </div>
     <br>
