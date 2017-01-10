@@ -42,9 +42,9 @@ app.config(['$routeProvider',
           templateUrl: 'partials/addPhoto.html',
           controller: 'addPhotoCtrl'
         })
-        .when('/photos', {
-          templateUrl: 'partials/photos.html',
-          controller: 'photosCtrl'
+        .when('/newsfeed', {
+          templateUrl: 'partials/newsfeed.html',
+          controller: 'newsfeedCtrl'
         })
         .otherwise({
           redirectTo: '/login'

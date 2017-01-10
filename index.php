@@ -36,6 +36,6 @@
   <script src="app/controllers/people.js"></script>
   <script src="app/controllers/person.js"></script>
   <script src="app/controllers/addPhoto.js"></script>
-  <script src="app/controllers/photos.js"></script>
+  <script src="app/controllers/newsfeed.js"></script>
 </html>
 

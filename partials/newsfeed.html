@@ -25,8 +25,35 @@
                 <a href="#/people">Persoane</a>
             </li>
             <li>
-                <a href="#/photos">Poze</a>
+                <a href="#/newsfeed">Newsfeed</a>
             </li>
         </ul>
     </div>
+</div>
+<div class="row">
+    <h4 align="center">
+        Cele mai recente poze:
+    </h4>
+</div>
+<div class="row" ng-repeat="photo in recentPhotos track by $index | orderBy : created : true">
+    <div align="center">
+        <div class="photo-wrapper">
+          <div align="left" style="padding-left:10px">
+            <a style="font-size:20px" href="#/person/:{{photo.uid}}">
+                {{photo.PosterName}}
+            </a>
+            <div>
+                {{photo.timeAgo}} ago
+            </div>
+          </div>
+            <div align="center" style="width:476px;height:714px;">
+                <img src="/api/uploaded_photos/{{photo.photoName}}" style="width:100%;height:auto;max-height:400px"></img>
+            </div>
+        </div>
+    </div>
+    <br>
+    <pre>
+    {{photo}}
+  </pre>
+    <br>
 </div>

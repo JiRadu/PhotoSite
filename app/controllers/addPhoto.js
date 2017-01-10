@@ -6,6 +6,7 @@ app.controller('addPhotoCtrl', function($scope, $rootScope, $routeParams, $locat
     photoUpload.uploadFileToUrl(photo, descr, $rootScope.uid, function(err, done) {
       if (!err) {
         Data.toast(done);
+        $location.path('/profile');
       } else {
         Data.toast(err);
       }

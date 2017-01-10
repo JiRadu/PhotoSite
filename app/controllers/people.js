@@ -12,4 +12,11 @@ app.controller('pplCtrl', function($scope, $rootScope, $routeParams, $location, 
   $scope.addAPhoto = function() {
     $location.path('/addPhoto');
   };
+  $scope.routeChange = function(uid) {
+    if (uid !== $rootScope.uid) {
+      $location.path('/person/:' + uid);
+    } else {
+      $location.path('/profile');
+    }
+  };
 });
