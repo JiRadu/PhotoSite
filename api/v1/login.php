@@ -10,7 +10,7 @@
   if ($user != NULL) {
       if(passwordHash::check_password($user['password'],$password)){
       $response['status'] = "success";
-      $response['message'] = 'Logged in successfully.';
+      $response['message'] = "Bine ai venit, $user[name]! <br> Aceasta este pagina ta de profil";
       $response['name'] = $user['name'];
       $response['uid'] = $user['uid'];
       $response['email'] = $user['email'];

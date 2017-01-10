@@ -12,9 +12,9 @@ $password = $r->customer->password;
 $isUserExists = $db->getOneRecord("select * from customers_auth where phone='$phone' or email='$email'");
 if(!$isUserExists){
     $r->customer->password = passwordHash::hash($password);
-    $tabble_name = "customers_auth";
+    $table_name = "customers_auth";
     $column_names = array('phone', 'name', 'email', 'password', 'city', 'address');
-    $result = $db->insertIntoTable($r->customer, $column_names, $tabble_name);
+    $result = $db->insertIntoTable($r->customer, $column_names, $table_name);
     if ($result != NULL) {
         $response["status"] = "success";
         $response["message"] = "User account created successfully";
