@@ -2,7 +2,6 @@
     require_once 'dbHandler.php';
     $db = new DbHandler();
     $target_dir = "../../../uploaded_files/";
-    print_r($_FILES);
     $target_file = $target_dir . basename($_FILES["file"]["name"]);
     if(move_uploaded_file($_FILES["file"]["tmp_name"], $target_file)){
       $r->photo->name = $_POST['name'];
@@ -20,9 +19,11 @@
       } else {
         $response["status"] = "error";
         $response["message"] = "Failed to insert photo";
+        echo json_encode($response);
       }
     } else {
       $response["status"] = "error";
       $response["message"] = "failed to save file!";
+      echo json_encode($response);
     }
 ?>
