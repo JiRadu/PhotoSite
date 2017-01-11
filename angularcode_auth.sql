@@ -38,8 +38,18 @@ CREATE TABLE IF NOT EXISTS `likes` (
   FOREIGN KEY(`uid`) REFERENCES customers_auth(`uid`),
   FOREIGN KEY(`pid`) REFERENCES photo(`pid`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
--- TODO: make Table for Comments
---
+
+  CREATE TABLE IF NOT EXISTS `comment` (
+    `cid` INT NOT NULL AUTO_INCREMENT,
+    `uid` INT NOT NULL,
+    `pid` INT NOT NULL,
+    `text` VARCHAR(255),
+    `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`cid`),
+    FOREIGN KEY(`uid`) REFERENCES customers_auth(`uid`),
+    FOREIGN KEY(`pid`) REFERENCES photo(`pid`)
+  ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=187 ;
+
 -- Dumping data for table `customers_auth`
 --
 

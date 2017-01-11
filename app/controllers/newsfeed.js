@@ -1,40 +1,5 @@
 app.controller('newsfeedCtrl', function($scope, $rootScope, $routeParams, $location, Data, toaster) {
-  $scope.logout = function() {
-    Data.get('logout').then(function(results) {
-      Data.toast(results);
-      $location.path('login');
-    });
-  };
-  $scope.like = function(pid, $index) {
-    if ($scope.recentPhotos[$index].liked === 'false') {
-      Data.post('likeFromUser', { uid: $rootScope.uid, pid: pid }).then(function(result) {
-        if (result) {
-          $scope.recentPhotos[$index].liked = 'true';
-          Data.toast(result);
-          $scope.recentPhotos[$index].likes++;
-        } else {
-          console.log(err);
-        }
-      }, function(err) {
-        console.log(err);
-      });
-    } else {
-      Data.post('unlikeFromUser', { uid: $rootScope.uid, pid: pid }).then(function(result) {
-        if (result) {
-          $scope.recentPhotos[$index].liked = 'false';
-          Data.toast(result);
-          $scope.recentPhotos[$index].likes--;
-        } else {
-          console.log(err);
-        }
-      }, function(err) {
-        console.log(err);
-      });
-    }
-  };
-  $scope.addAPhoto = function() {
-    $location.path('/addPhoto');
-  };
+  var pending = false;
   // TODO: PUT A LIMIT HERE
   Data.get('recentPhotos').then(function(results) {
       if (results.status !== 'error') {
@@ -55,11 +20,89 @@ app.controller('newsfeedCtrl', function($scope, $rootScope, $routeParams, $locat
         Data.post('isLikedByUser', { uid: $rootScope.uid, pid: photo.pid }).then(function(result) {
           photo.liked = result;
         });
+        photo.comments = [];
+        Data.post('getComments', { pid: photo.pid }).then(function(result) {
+          if (result && angular.isArray(result)) {
+            photo.comments = result;
+            photo.comments.forEach(function(comment) {
+              var aux = comment.created.split(/[- :]/);
+              comment.created = new Date(Date.UTC(aux[0], aux[1] - 1, aux[2], aux[3] - 2, aux[4], aux[5]));
+              Data.post('getInfo', { uid: comment.uid }).then(function(result) {
+                comment.posterName = result.name;
+              });
+            });
+          }
+        });
       });
     },
     function(err) {
       console.log(err);
     });
+  $scope.logout = function() {
+    Data.get('logout').then(function(results) {
+      Data.toast(results);
+      $location.path('login');
+    });
+  };
+  $scope.like = function(pid, $index) {
+    pending = true;
+    if ($scope.recentPhotos[$index].liked === 'false') {
+      Data.post('likeFromUser', { uid: $rootScope.uid, pid: pid }).then(function(result) {
+        if (result) {
+          $scope.recentPhotos[$index].liked = 'true';
+          Data.toast(result);
+          $scope.recentPhotos[$index].likes++;
+          pending = false;
+        } else {
+          pending = false;
+          console.log(err);
+        }
+      }, function(err) {
+        pending = false;
+        console.log(err);
+      });
+    } else {
+      Data.post('unlikeFromUser', { uid: $rootScope.uid, pid: pid }).then(function(result) {
+        if (result) {
+          $scope.recentPhotos[$index].liked = 'false';
+          Data.toast(result);
+          $scope.recentPhotos[$index].likes--;
+          pending = false;
+        } else {
+          pending = false;
+          console.log(err);
+        }
+      }, function(err) {
+        pending = false;
+        console.log(err);
+      });
+    }
+  };
+  $scope.postComment = function(index, pid, text) {
+    Data.post('postComment', { index: index, pid: pid, text: text, uid: $rootScope.uid }).then(function(result) {
+        if (result) {
+          if (result.status == 'success') {
+            var aux = result.created.split(/[- :]/);
+            result.created = new Date(Date.UTC(aux[0], aux[1] - 1, aux[2], aux[3] - 2, aux[4], aux[5]));
+            $scope.recentPhotos[index].comments.push({
+              pid: pid,
+              text: text,
+              cid: result.cid,
+              uid: $rootScope.uid,
+              created: result.created,
+              posterName: $rootScope.name
+            });
+            Data.toast(result);
+          }
+        }
+      },
+      function(err) {
+        console.log(err);
+      });
+  };
+  $scope.addAPhoto = function() {
+    $location.path('/addPhoto');
+  };
   var getDuration = function(millis) {
     var dur = {};
     var units = [

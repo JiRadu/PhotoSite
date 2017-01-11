@@ -63,19 +63,32 @@
                     'fa-thumbs-up': photo.liked==='true',
                     'fa-thumbs-o-up': photo.liked==='false'}"
                     style="margin-left: 12px"
-                    ng-click="like(photo.pid, $index, photo.likes)">
+                    ng-click="like(photo.pid, $index, photo.likes)" ng-disabled="pending">
                     Like
                 </button>
                 {{photo.likes}}
             </div>
             <hr>
-            <input class="form-control" type="text" placeholder="Write a comment">
+            <div align="left" style="padding-left:10px">
+              <!-- TODO:pune o limita si aici -->
+                <div ng-repeat="comment in photo.comments track by $index">
+                    <div style="font-size:12px">
+                      {{comment.created.getDate()}}, Time:{{comment.created.getHours()}}:{{comment.created.getMinutes()}}
+                    </div>
+                    <div style="font-size:20px">
+                        <a href="#/person/:{{comment.uid}}">{{comment.posterName}}</a>: {{comment.text}}
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <form ng-submit="postComment($index,photo.pid,commentText);commentText=''">
+                <input style="margin-left:10px, margin-right:10px"
+                    class="form-control" type="text" name="commentText"
+                    placeholder="Write a comment" ng-model="commentText">
+                 <input type="submit" value="Submit" style="display:none" />
+            </form>
             <br>
         </div>
     </div>
-    <br>
-    <pre>
-    {{photo}}
-  </pre>
     <br>
 </div>
