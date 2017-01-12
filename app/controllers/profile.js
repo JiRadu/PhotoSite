@@ -1,66 +1,71 @@
 app.controller('profileCtrl', function($scope, $rootScope, $routeParams, $location, Data, toaster) {
   var photosProcessed = 0;
   $scope.profile = true;
-  Data.post('getInfo', { uid: $scope.uid })
-    .then(function success(response) {
-      $scope.name = response.name;
-      $scope.email = response.email;
-      $scope.phone = response.phone;
-      $scope.address = response.address;
-    }, function error(err) {});
-  Data.post('getImagesForUser', { uid: $scope.uid })
-    .then(function success(response) {
-      if (response.status !== 'error') {
-        $scope.photos = response;
-        //Convert mysql date into javascript date
-        $scope.photos.forEach(function(photo) {
-          //daca descriere = undefined, sa afiseze nimic
-          if (photo.descr === 'undefined') {
-            photo.descr = '';
-          }
-          var aux = photo.created.split(/[- :]/);
-          photo.created = new Date(Date.UTC(aux[0], aux[1] - 1, aux[2], aux[3] - 2, aux[4], aux[5]));
-          //make timeAgo
-          photo.timeAgo = getDuration(Date.now() - photo.created).toString();
-          aux = photo.timeAgo.split(/[, ]/);
-          photo.timeAgo = aux[0] + ' ' + aux[1];
-          Data.post('isLikedByUser', { uid: $rootScope.uid, pid: photo.pid }).then(function(result) {
-            photo.liked = result;
-          });
-          photo.comments = [];
-          Data.post('getComments', { pid: photo.pid }).then(function(result) {
-            if (result && angular.isArray(result)) {
-              photo.comments = result;
-              photo.comments.forEach(function(comment) {
-                var aux = comment.created.split(/[- :]/);
-                comment.created = new Date(Date.UTC(aux[0], aux[1] - 1, aux[2], aux[3] - 2, aux[4], aux[5]));
-                Data.post('getInfo', { uid: comment.uid }).then(function(result) {
-                  comment.posterName = result.name;
+  var unbindHandler = $rootScope.$on('init', function() {
+    init();
+  });
+
+  function init() {
+    Data.post('getInfo', { uid: $scope.uid })
+      .then(function success(response) {
+        $scope.name = response.name;
+        $scope.email = response.email;
+        $scope.phone = response.phone;
+        $scope.address = response.address;
+      }, function error(err) {});
+    Data.post('getImagesForUser', { uid: $scope.uid })
+      .then(function success(response) {
+        if (response.status !== 'error') {
+          $scope.photos = response;
+          //Convert mysql date into javascript date
+          $scope.photos.forEach(function(photo) {
+            //daca descriere = undefined, sa afiseze nimic
+            if (photo.descr === 'undefined') {
+              photo.descr = '';
+            }
+            var aux = photo.created.split(/[- :]/);
+            photo.created = new Date(Date.UTC(aux[0], aux[1] - 1, aux[2], aux[3] - 2, aux[4], aux[5]));
+            //make timeAgo
+            photo.timeAgo = getDuration(Date.now() - photo.created).toString();
+            aux = photo.timeAgo.split(/[, ]/);
+            photo.timeAgo = aux[0] + ' ' + aux[1];
+            Data.post('isLikedByUser', { uid: $rootScope.uid, pid: photo.pid }).then(function(result) {
+              photo.liked = result;
+            });
+            photo.comments = [];
+            Data.post('getComments', { pid: photo.pid }).then(function(result) {
+              if (result && angular.isArray(result)) {
+                photo.comments = result;
+                photo.comments.forEach(function(comment) {
+                  var aux = comment.created.split(/[- :]/);
+                  comment.created = new Date(Date.UTC(aux[0], aux[1] - 1, aux[2], aux[3] - 2, aux[4], aux[5]));
+                  Data.post('getInfo', { uid: comment.uid }).then(function(result) {
+                    comment.posterName = result.name;
+                  });
+                  //make timeAgo
+                  comment.timeAgo = getDuration(Date.now() - comment.created).toString();
+                  aux = comment.timeAgo.split(/[, ]/);
+                  comment.timeAgo = aux[0] + ' ' + aux[1];
                 });
-                //make timeAgo
-                comment.timeAgo = getDuration(Date.now() - comment.created).toString();
-                aux = comment.timeAgo.split(/[, ]/);
-                comment.timeAgo = aux[0] + ' ' + aux[1];
+              }
+            });
+            photosProcessed++;
+            if (photosProcessed === $scope.photos.length) {
+              //sort by '-created'
+              $scope.photos.sort(function(a, b) {
+                return b.created - a.created;
+              });
+              //THEN sort by no of likes -> the result will be as asked
+              $scope.photos.sort(function(a, b) {
+                return b.likes - a.likes;
               });
             }
           });
-          photosProcessed++;
-          if (photosProcessed === $scope.photos.length) {
-            //sort by '-created'
-            $scope.photos.sort(function(a, b) {
-              return b.created - a.created;
-            });
-            //THEN sort by no of likes -> the result will be as asked
-            $scope.photos.sort(function(a, b) {
-              return b.likes - a.likes;
-            });
-          }
-        });
-      } else {
-        $scope.photos = [];
-      }
-    });
-
+        } else {
+          $scope.photos = [];
+        }
+      });
+  }
   $scope.like = function(pid, $index) {
     pending = true;
     if ($scope.photos[$index].liked === 'false') {

@@ -63,6 +63,7 @@ app.config(['$routeProvider',
           if (next.$$route.originalPath === '/signup' || next.$$route.originalPath === '/login') {
             $location.path('/profile');
           }
+          $rootScope.$emit('init');
         } else {
           var nextUrl = next.$$route.originalPath;
           if (nextUrl == '/signup' || nextUrl == '/login') {} else {
