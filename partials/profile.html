@@ -49,12 +49,55 @@
             Galerie foto
         </h4>
     </div>
-<table>
-    <tr class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-        <td ng-repeat="photo in photos track by $index">
-            <i class="photo" style='background-image: url(/api/uploaded_photos/{{photo.photoName}})'></i>
-        </td>
-    </tr>
-  </table>
-        <!-- TODO: la hover sa faca ceva -->
 </div>
+<div class="row" ng-show="photos.length > 0" ng-repeat="photo in photos track by $index" style="padding:8px;margin: 3px;border:1px;border-style:ridge;">
+    <div class="col-lg-4">
+      <i class="photo" style='background-image: url(/api/uploaded_photos/{{photo.photoName}})'></i>
+        <p><b> Description: </b> {{photo.descr}}</p>
+        <br>
+        <a  href="/api/uploaded_photos/{{photo.photoName}}">
+          <button class=" btn btn-default fa fa-expand"></button>
+        </a>
+        <button class="btn btn-default fa"
+            ng-class="{'btn':true, 'btn-default':true, 'fa':true,
+            'fa-thumbs-up': photo.liked==='true',
+            'fa-thumbs-o-up': photo.liked==='false'}"
+            style="margin-left: 12px"
+            ng-click="like(photo.pid, $index, photo.likes)" ng-disabled="pending">
+            Like
+        </button>
+        <button class="btn btn-danger fa fa-cross" ng-click="deletePhoto(photo.pid, $index)">
+          Delete
+        </button>
+    </div>
+    <div class="col-lg-4">
+        <div align="left" style="padding-left:10px">
+            <b>Commentarii</b>
+            <!-- TODO:pune o limita si aici| NOPE TOO HARD -->
+            <div ng-repeat="comment in photo.comments track by $index">
+                <div style="font-size:12px">
+                    {{comment.timeAgo}}
+                </div>
+                <div style="font-size:20px">
+                    <a href="#/person/:{{comment.uid}}">{{comment.posterName}}</a>: {{comment.text}}
+                </div>
+            </div>
+        </div>
+        <form ng-submit="postComment($index,photo.pid,commentText);commentText=''">
+            <input style="margin-left:10px, margin-right:10px" class="form-control" type="text" name="commentText" placeholder="Write a comment" ng-model="commentText">
+            <input type="submit" value="Submit" style="display:none" />
+        </form>
+    </div>
+    <div class="col-lg-4">
+        <b>Statistici:</b>
+        <p> Created at: {{photo.created.toString()}} </p>
+        <p> Number of likes: {{photo.likes}} </p>
+        <p> Number of comments: {{photo.comments.length}}</p>
+
+        <pre>
+          {{photo}}
+        </pre>
+    </div>
+
+</div>
+<!-- TODO: la hover sa faca ceva sau un modal-->

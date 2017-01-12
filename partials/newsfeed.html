@@ -46,7 +46,7 @@
                 <div>
                     {{photo.timeAgo}} ago
                 </div>
-                <div>
+                <div style="font-size:25px">
                     <b>Descriere: </b>{{photo.descr}}
                 </div>
             </div>
@@ -70,10 +70,7 @@
             </div>
             <hr>
             <div align="left" style="padding-left:10px">
-              <!-- TODO:pune o limita si aici -->
-                <div ng-show="photo.comments.length > 0" align="center">
-                  <a class="link">show more</a>
-                </div>
+              <!-- TODO:pune o limita si aici| NOPE TOO HARD -->
                 <div ng-repeat="comment in photo.comments track by $index">
                     <div style="font-size:12px">
                       {{comment.created.getDate()}} {{month[0]}}, Time: {{comment.created.getHours()}}:{{comment.created.getMinutes()}}
@@ -98,3 +95,4 @@
 <div class = "row" align="center"  ng-show="recentPhotos.length < recentPhotos.maxPosts">
   <button class="btn btn-default" ng-click="getMorePosts()">I want more</button>
 </div>
+<hr>

@@ -1,3 +1,2 @@
 TODO: https://www.sitepoint.com/php-gallery-system-minutes/
 TODO: Pozele unui utilizator sunt afisate sortate descrescator in functie de numarul de like-uri. Daca 2 poze au acelasi numar de like-uri, se sorteaza in ordine cronologica descrestoare (cele mai recente primele).
-TODO: Un utilizator poate sterge poze din contul lui. Atunci cand sterge o poza, se sterg automat si comentariile associate, precum si like-urile.

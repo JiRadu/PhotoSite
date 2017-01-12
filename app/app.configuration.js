@@ -52,7 +52,7 @@ app.config(['$routeProvider',
     }
   ])
   .run(function($rootScope, $location, Data) {
-    $rootScope.$on("$routeChangeStart", function(event, next, current) {
+    $rootScope.$on('$routeChangeStart', function(event, next, current) {
       $rootScope.authenticated = false;
       Data.get('session').then(function(results) {
         if (results.uid) {
@@ -65,10 +65,8 @@ app.config(['$routeProvider',
           }
         } else {
           var nextUrl = next.$$route.originalPath;
-          if (nextUrl == '/signup' || nextUrl == '/login') {
-
-          } else {
-            $location.path("/login");
+          if (nextUrl == '/signup' || nextUrl == '/login') {} else {
+            $location.path('/login');
           }
         }
       });

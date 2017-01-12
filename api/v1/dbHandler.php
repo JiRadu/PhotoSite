@@ -17,6 +17,10 @@ class DbHandler {
         $r = $this->conn->query($query.' LIMIT 1') or die($this->conn->error.__LINE__);
         return $result = $r->fetch_assoc();
     }
+    public function deleteRecords($query){
+      $r = $this->conn->query($query) or die($this->conn->error.__LINE__);
+      return $r;
+    }
     public function getAllRecords($query){
       $r = $this->conn->query($query) or die($this->conn->error.__LINE__);
       $rows = array();
