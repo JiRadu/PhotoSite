@@ -5,7 +5,7 @@ $r = file_get_contents('php://input');
 $r = json_decode($r);
 $pid = $r->pid;
 $db = new DbHandler();
-$users = $db->getAllRecords("select * from comment WHERE pid = '$pid'");
+$users = $db->getAllRecords("select * from comment WHERE pid = '$pid' order by created");
 if($users != NULL) {
   echo json_encode($users);
 } else {

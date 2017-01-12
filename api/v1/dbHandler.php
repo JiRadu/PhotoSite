@@ -25,6 +25,16 @@ class DbHandler {
       }
       return $rows;
     }
+    public function getRecords($query, $nr){
+      if($nr !== NULL){
+        $r = $this->conn->query($query.' LIMIT '.$nr) or die($this->conn->error.__LINE__);
+        $rows = array();
+        while($row = $r->fetch_assoc()) {
+          $rows[] = $row;
+        }
+        return $rows;
+      }
+    }
     public function deleteOneLike($query){
       $r = $this->conn->query($query) or die($this->conn->error.__LINE__);
       return $r;

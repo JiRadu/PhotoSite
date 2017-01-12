@@ -71,9 +71,12 @@
             <hr>
             <div align="left" style="padding-left:10px">
               <!-- TODO:pune o limita si aici -->
+                <div ng-show="photo.comments.length > 0" align="center">
+                  <a class="link">show more</a>
+                </div>
                 <div ng-repeat="comment in photo.comments track by $index">
                     <div style="font-size:12px">
-                      {{comment.created.getDate()}}, Time:{{comment.created.getHours()}}:{{comment.created.getMinutes()}}
+                      {{comment.created.getDate()}} {{month[0]}}, Time: {{comment.created.getHours()}}:{{comment.created.getMinutes()}}
                     </div>
                     <div style="font-size:20px">
                         <a href="#/person/:{{comment.uid}}">{{comment.posterName}}</a>: {{comment.text}}
@@ -91,4 +94,7 @@
         </div>
     </div>
     <br>
+</div>
+<div class = "row" align="center"  ng-show="recentPhotos.length < recentPhotos.maxPosts">
+  <button class="btn btn-default" ng-click="getMorePosts()">I want more</button>
 </div>
