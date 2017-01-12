@@ -1,20 +1,6 @@
 app.controller('profileCtrl', function($scope, $rootScope, $routeParams, $location, Data, toaster) {
   var photosProcessed = 0;
-  $scope.logout = function() {
-    Data.get('logout').then(function(results) {
-      Data.toast(results);
-      $location.path('login');
-    });
-  };
-  $scope.deletePhoto = function(pid, index) {
-    Data.post('deletePhoto', { uid: $rootScope.uid, pid: pid })
-      .then(function success(response) {
-        if (response.status == "success") {
-          $scope.photos.splice(index, 1);
-        }
-        Data.toast(response);
-      });
-  };
+  $scope.profile = true;
   Data.post('getInfo', { uid: $scope.uid })
     .then(function success(response) {
       $scope.name = response.name;
@@ -22,9 +8,6 @@ app.controller('profileCtrl', function($scope, $rootScope, $routeParams, $locati
       $scope.phone = response.phone;
       $scope.address = response.address;
     }, function error(err) {});
-  $scope.addAPhoto = function() {
-    $location.path('/addPhoto');
-  };
   Data.post('getImagesForUser', { uid: $scope.uid })
     .then(function success(response) {
       if (response.status !== 'error') {
@@ -111,6 +94,24 @@ app.controller('profileCtrl', function($scope, $rootScope, $routeParams, $locati
         console.log(err);
       });
     }
+  };
+  $scope.addAPhoto = function() {
+    $location.path('/addPhoto');
+  };
+  $scope.logout = function() {
+    Data.get('logout').then(function(results) {
+      Data.toast(results);
+      $location.path('login');
+    });
+  };
+  $scope.deletePhoto = function(pid, index) {
+    Data.post('deletePhoto', { uid: $rootScope.uid, pid: pid })
+      .then(function success(response) {
+        if (response.status == "success") {
+          $scope.photos.splice(index, 1);
+        }
+        Data.toast(response);
+      });
   };
   $scope.postComment = function(index, pid, text) {
     Data.post('postComment', { index: index, pid: pid, text: text, uid: $rootScope.uid }).then(function(result) {

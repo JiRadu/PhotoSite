@@ -66,7 +66,7 @@
             ng-click="like(photo.pid, $index, photo.likes)" ng-disabled="pending">
             Like
         </button>
-        <button class="btn btn-danger fa fa-cross" ng-click="deletePhoto(photo.pid, $index)">
+        <button ng-show="(uid == photo.uid)" class="btn btn-danger fa fa-cross" ng-click="deletePhoto(photo.pid, $index)">
           Delete
         </button>
     </div>
@@ -93,10 +93,6 @@
         <p> Created at: {{photo.created.toString()}} </p>
         <p> Number of likes: {{photo.likes}} </p>
         <p> Number of comments: {{photo.comments.length}}</p>
-
-        <pre>
-          {{photo}}
-        </pre>
     </div>
 
 </div>

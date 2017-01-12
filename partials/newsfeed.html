@@ -67,6 +67,10 @@
                     Like
                 </button>
                 {{photo.likes}}
+                <br style="margin:10px">
+                <button style="margin-left: 12px" ng-show="(uid == photo.uid)" class="btn btn-danger fa fa-cross" ng-click="deletePhoto(photo.pid, $index)">
+                  Delete
+                </button>
             </div>
             <hr>
             <div align="left" style="padding-left:10px">

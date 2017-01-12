@@ -137,6 +137,15 @@ app.controller('newsfeedCtrl', function($scope, $rootScope, $routeParams, $locat
   $scope.addAPhoto = function() {
     $location.path('/addPhoto');
   };
+  $scope.deletePhoto = function(pid, index) {
+    Data.post('deletePhoto', { uid: $rootScope.uid, pid: pid })
+      .then(function success(response) {
+        if (response.status == "success") {
+          $scope.recentPhotos.splice(index, 1);
+        }
+        Data.toast(response);
+      });
+  };
   var getDuration = function(millis) {
     var dur = {};
     var units = [
